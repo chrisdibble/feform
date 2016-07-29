@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {feinput, inputPropSanitizer} from './feform';
+import {feinput, inputPropSanitizer} from '../feform';
 import _ from 'lodash';
 
 const errorReporter = function(errors) {
