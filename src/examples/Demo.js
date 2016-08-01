@@ -225,6 +225,10 @@ class Example6 extends Component {
         });
     };
 
+    onValidityChange = (event) => {
+        console.log(event);
+    };
+
     render() {
         const {props, state} = this;
 
@@ -232,12 +236,12 @@ class Example6 extends Component {
             <div>
                 <div style={{display: 'inline-block', width: 400, float: 'left'}}>
                     <h2>Dynamic Input</h2>
-                    <Form submit={(event) => {
+                    <Form validityChange={this.onValidityChange} submit={(event) => {
                         props.handleSubmit(event, 'Example 6')
                     }}>
                         {(() => {
                             return state.inputRows.map((input, index) => {
-                                return <Field name={input.name + '-' + index} label="Tag" key={input.name + index}/>
+                                return <Field name={input.name + '-' + index} label="Tag" key={input.name + index} initialValue={'test'}/>
 
                             })
                         })()}
@@ -300,7 +304,7 @@ class Example8 extends Component {
                     }}>
                         <MultiValueInput name="favoriteLetter" label="Favorite Letter"
                                          options={['a', 'b', 'c', 'd', 'e']}/>
-                        <ManyInputsInput name="tag" label="tag"/>
+                        <ManyInputsInput name="tag" label="tag" initialValue={'key,value'}/>
                         <button type="submit">Submit</button>
                         <button type="reset">Reset</button>
                     </Form>

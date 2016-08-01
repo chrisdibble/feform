@@ -33,7 +33,7 @@ const runValidations = function(inputs, reportFailures = true) {
 
     iterateInputRefs.call(this, inputs, function(input) {
         let inputFailures = [];
-        inputCount++;
+            inputCount++;
 
         // check for pristine inputs
         if (input.isPristine()) {
@@ -118,7 +118,7 @@ export default class Form extends Component {
         event.preventDefault();
 
         iterateInputRefs.call(me, me.refs, function(input) {
-            input.clearValue();
+            input.resetValue();
         });
 
         me.setState({
@@ -193,6 +193,13 @@ const feinput = (ComposedComponent) => class extends React.Component {
     clearValue = () => {
         this.setState({
             value: '',
+            errors: null
+        });
+    };
+
+    resetValue = () => {
+        this.setState({
+            value: this.props.initialValue,
             errors: null
         });
     };
