@@ -14,7 +14,7 @@ const findInputs = function(children, valueChange) {
     let index = 0;
 
     return React.Children.map(children, (child) => {
-        if (child.type && child.type.displayName === 'feinput') {
+        if (child && child.type && child.type.displayName === 'feinput') {
             return React.cloneElement(child, {
                 ref: 'input' + index++,
                 valueChange
