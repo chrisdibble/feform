@@ -57,11 +57,10 @@ const Example1 = (props) => {
             <Form submit={(event) => {
                 props.handleSubmit(event, 'Example 1')
             }}>
-                <Field name="username" label="Username" validations={['required']}/>
-                <Field name="password" label="Password" type="password" validations={['required']}/>
+                <Field name="username" label="Username"/>
+                <Field name="password" label="Password" type="password"/>
                 <TextArea name="about" label="Tell us about yourself"/>
-                <Checkbox name="acceptTerms" label="Accept terms & conditions" checkedValue="accepted"
-                          validations={['required']}/>
+                <Checkbox name="acceptTerms" label="Accept terms & conditions" checkedValue="accepted"/>
                 <button type="submit">Submit</button>
                 <button type="reset">Reset</button>
             </Form>
@@ -94,6 +93,8 @@ class Example3 extends Component {
     };
 
     onValidityChange = (event) => {
+        console.log(event);
+
         this.setState({
             isValid: event.valid
         });

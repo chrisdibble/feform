@@ -101,12 +101,8 @@ const ManyInputsInput = feinput(({label, errors, setValue, value, options, ...ot
             values[1] = event.target.value;
         }
 
-        console.log(values);
-
         setValue(values.join(','));
     };
-
-    console.log(value);
 
     return (
         <fieldset>
