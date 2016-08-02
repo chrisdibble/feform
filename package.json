@@ -6,7 +6,7 @@
   "main": "./lib/feform",
   "repository": {
     "type": "git",
-    "url": "https://github.com/chrisdibble/feform.git"
+    "url": "git+https://github.com/chrisdibble/feform.git"
   },
   "license": "MIT",
   "devDependencies": {
@@ -52,7 +52,9 @@
       "react",
       "es2015"
     ],
-    "plugins": ["transform-class-properties"]
+    "plugins": [
+      "transform-class-properties"
+    ]
   },
   "dependencies": {
     "lodash": "^4.13.1",
@@ -64,5 +66,16 @@
     "prepublish": "node_modules/babel-cli/bin/babel.js src/feform.js --out-file lib/feform.js",
     "start": "node ./scripts/start.js",
     "build": "node ./scripts/build.js"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/chrisdibble/feform/issues"
+  },
+  "homepage": "https://github.com/chrisdibble/feform#readme",
+  "keywords": [
+    "React",
+    "JavaScript",
+    "Forms",
+    "Reactive"
+  ],
+  "author": "Chris Dibble <cdibble213@gmail.com>"
 }
