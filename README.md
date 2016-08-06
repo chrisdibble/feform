@@ -76,6 +76,7 @@ Additionally, the following methods are available on a `<Form>` component:
 
 - reset() - used to externally reset the `<Form>`
 - submit() - used to externally submit the `<Form>`
+- runValidations() - used to manually force a validation check, ultimately invoking `props.validityChange` if defined
 
 
 ### Adding Validations
@@ -110,3 +111,28 @@ Validations are passed to Input components like so:
     };
     
 Validations run and are reported 1. whenever a form is submitted and 2. whenever `setValue` on an Input component is invoked.
+
+### Default/Initial Values
+
+Initial or default values can be set easily by passing the `initialValue` prop on any `feinput`:
+
+    const LocationForm = (props) => {
+        return (
+            <div>
+                <h2>Zip Code Form</h2>
+                <Form submit={event => console.log(event)}>
+                    <Field name="zip" 
+                            label="Zip Code" 
+                            initialValue="90210"
+                            validations={[
+                                {presence: true},
+                                {length: {is: 5},
+                                {numericality: {onlyInteger: true}}
+                            ]}/>
+                    <button type="submit">Find me</button>
+                </Form>
+            </div>
+        );
+    };
+    
+Internally an `feinput` converts the `initialValue` to `value` prior to the first render cycle. `initialValue` is not recommended to be used within your input.
