@@ -179,7 +179,6 @@ const feinput = (ComposedComponent) => class extends React.Component {
 
         this.state = {
             value: props.initialValue,
-            pristine: true,
             errors: null
         };
     }
@@ -208,7 +207,7 @@ const feinput = (ComposedComponent) => class extends React.Component {
 
     getName = () => this.props.name;
 
-    isPristine = () => this.state.pristine;
+    isPristine = () => this.props.initialValue === this.state.value;
 
     render() {
         const setValue = (value) => {
@@ -216,7 +215,6 @@ const feinput = (ComposedComponent) => class extends React.Component {
 
             me.setState({
                 value: value,
-                pristine: value === me.props.initialValue,
                 errors: null
             }, me.props.valueChange);
         };
@@ -232,7 +230,7 @@ const feinput = (ComposedComponent) => class extends React.Component {
 // utility function to pass allowed props to native input elements, preventing invalid prop warning (React 15.2+)
 const inputPropSanitizer = function(props) {
     /* eslint-disable */
-    const {name, validations, initialValue, pristine, errors, setValue, clearValue, valueChange, ...nativeProps} = props;
+    const {name, validations, initialValue, errors, setValue, clearValue, valueChange, ...nativeProps} = props;
     /* eslint-disable */
 
     return nativeProps;

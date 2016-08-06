@@ -14,9 +14,9 @@ if (process.argv[2] === '--debug-template') {
 }
 var srcPath = path.resolve(__dirname, relativePath, 'src');
 var nodeModulesPath = path.join(__dirname, '..', 'node_modules');
-var indexHtmlPath = path.resolve(__dirname, relativePath, 'index.html');
-var faviconPath = path.resolve(__dirname, relativePath, 'favicon.ico');
-var buildPath = path.join(__dirname, isInNodeModules ? '../../..' : '..', 'build');
+var indexHtmlPath = path.resolve(__dirname, srcPath, 'index.html');
+var faviconPath = path.resolve(__dirname, srcPath, 'favicon.ico');
+var buildPath = path.join(__dirname, isInNodeModules ? '../../..' : '..', '.');
 
 module.exports = {
   bail: true,
@@ -24,8 +24,8 @@ module.exports = {
   entry: path.join(srcPath, 'index'),
   output: {
     path: buildPath,
-    filename: '[name].[chunkhash].js',
-    chunkFilename: '[name].[chunkhash].chunk.js',
+    filename: '[name].js',
+    chunkFilename: '[name].chunk.js',
     // TODO: this wouldn't work for e.g. GH Pages.
     // Good news: we can infer it from package.json :-)
     publicPath: '/'
@@ -117,6 +117,6 @@ module.exports = {
         screw_ie8: true
       }
     }),
-    new ExtractTextPlugin('[name].[contenthash].css')
+    new ExtractTextPlugin('[name].css')
   ]
 };
