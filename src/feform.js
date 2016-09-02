@@ -93,6 +93,18 @@ export default class Form extends Component {
         validationFailures: []
     };
 
+    getInputByName = (name) => {
+        let input;
+
+        _.forOwn(this.refs, (ref) => {
+            if (ref.getName && ref.getName() === name) {
+                input = ref;
+            }
+        });
+
+        return input;
+    };
+
     handleSubmit = (event) => {
         event.preventDefault();
 
@@ -145,7 +157,7 @@ export default class Form extends Component {
             // destruct props to prevent invalid prop on native input warning (React 15.2+)
             /* eslint-disable */
             {submit, validityChange, afterReset, reportFieldErrors, children, ...rest} = me.props;
-        /* eslint-disable */
+            /* eslint-disable */
 
         return (
             <form ref="form" {...rest} onSubmit={me.handleSubmit} onReset={me.handleReset} noValidate>
