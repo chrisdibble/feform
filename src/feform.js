@@ -161,7 +161,9 @@ export default class Form extends Component {
 
         return (
             <form ref="form" {...rest} onSubmit={me.handleSubmit} onReset={me.handleReset} noValidate>
-                {findInputs(children, me.validate)}
+                {findInputs(children, () => {
+                    me.props.validityChange(runValidations(me.refs, me.props.reportFieldErrors));
+                })}
             </form>
         );
     }
