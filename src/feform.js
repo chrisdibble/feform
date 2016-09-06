@@ -138,10 +138,10 @@ export default class Form extends Component {
         }, me.props.afterReset);
     };
 
-    runValidations = () => {
+    validate = (reportInputErrors = true) => {
         const me = this;
 
-        me.props.validityChange(runValidations(me.refs, me.props.reportFieldErrors));
+        return runValidations(me.refs, reportInputErrors);
     };
 
     submit = () => {
@@ -161,7 +161,7 @@ export default class Form extends Component {
 
         return (
             <form ref="form" {...rest} onSubmit={me.handleSubmit} onReset={me.handleReset} noValidate>
-                {findInputs(children, me.runValidations.bind(me))}
+                {findInputs(children, me.validate)}
             </form>
         );
     }
