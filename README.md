@@ -46,8 +46,6 @@ All components decorated with `feinput` receive the following `props`:
 
 `setValue` must be invoked the set the value of your inpur within your `<Form>` component.
 
-Note: Currently Inputs _must_ be direct children of the `<Form>` component
-
 ### Creating a Basic Form
 
     import Form from {feform};
