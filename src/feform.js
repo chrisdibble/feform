@@ -10,19 +10,34 @@ const iterateInputRefs = function(refs, fn) {
     });
 };
 
-const findInputs = function(children, valueChange) {
-    let index = 0;
-
-    return React.Children.map(children, (child) => {
+const findInputs = function(children, valueChange, context={inputIndex: 0, childIndex: 0}, depth=0) {
+    let inputs = [];
+    React.Children.forEach(children, (child) => {
+        // have to assign a key to avoid warning about dynamic children
+        // (https://facebook.github.io/react/docs/multiple-components.html#dynamic-children)
+        let childKey = `feinput-child${context.childIndex++}`;
         if (child && child.type && child.type.displayName === 'feinput') {
-            return React.cloneElement(child, {
-                ref: 'input' + index++,
+            let input = React.cloneElement(child, {
+                ref: `input${context.inputIndex++}`,
+                key: childKey,
                 valueChange
             });
+            inputs.push(input);
         } else {
-            return child;
+          if (child.props && child.props.children) {
+              let childInputs = findInputs(child.props.children, valueChange, context, depth+1);
+              let input = React.cloneElement(child, {
+                key: childKey,
+                ...child.props
+              }, childInputs);
+              inputs.push(input)
+          } else {
+              inputs.push(child);
+          }
         }
     });
+
+    return inputs;
 };
 
 const runValidations = function(inputs, reportFailures = true) {

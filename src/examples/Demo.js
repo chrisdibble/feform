@@ -43,6 +43,9 @@ export default class Demo extends Component {
                     <tr>
                         <td><Example8 handleSubmit={this.onSubmit}/></td>
                     </tr>
+                    <tr>
+                        <td><Example9 handleSubmit={this.onSubmit}/></td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -313,3 +316,26 @@ class Example8 extends Component {
         );
     }
 }
+
+const Example9 = (props) => {
+    return (
+        <div>
+            <h2>Basic Form with Field Errors with Nested Inputs</h2>
+            <Form submit={(event) => {
+                props.handleSubmit(event, 'Example 9')
+            }}>
+                <div style={{background: "green", padding: "10px"}}>
+                  <Field name="username" label="Username" validations={['required']}/>
+                  <div style={{background: "blue"}}>
+                    <Field name="password" label="Password" type="password" validations={['required']}/>
+                  </div>
+                </div>
+                <TextArea name="about" label="Tell us about yourself"/>
+                <Checkbox name="acceptTerms" label="Accept terms & conditions" checkedValue="accepted"
+                          validations={['required']}/>
+                <button type="submit">Submit</button>
+                <button type="reset">Reset</button>
+            </Form>
+        </div>
+    );
+};
