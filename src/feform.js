@@ -24,7 +24,7 @@ const findInputs = function(children, valueChange, context={inputIndex: 0, child
             });
             inputs.push(input);
         } else {
-          if (child.props && child.props.children) {
+          if (child && child.props && child.props.children) {
               let childInputs = findInputs(child.props.children, valueChange, context, depth+1);
               let input = React.cloneElement(child, {
                 key: childKey,

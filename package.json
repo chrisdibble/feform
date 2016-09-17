@@ -1,6 +1,6 @@
 {
   "name": "feform",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "private": false,
   "description": "Simple Reactive Form Components",
   "main": "./lib/feform",
