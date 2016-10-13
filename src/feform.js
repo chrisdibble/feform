@@ -232,6 +232,16 @@ const feinput = (ComposedComponent) => class extends React.Component {
         });
     };
 
+    setValue = (value, clearErrors = false) => {
+        const nextState = { value };
+
+        if (clearErrors) {
+            nextState.errors = null;
+        }
+
+        this.setState(nextState);
+    };
+
     getValue = () => this.state.value;
 
     getName = () => this.props.name;
