@@ -15,7 +15,7 @@ const findInputs = function(children, valueChange, context={inputIndex: 0, child
     React.Children.forEach(children, (child) => {
         // have to assign a key to avoid warning about dynamic children
         // (https://facebook.github.io/react/docs/multiple-components.html#dynamic-children)
-        let childKey = `feinput-child${context.childIndex++}`;
+        const childKey = _.isUndefined(child.key) ? `feinput-child${context.childIndex++}` : child.key;
         if (child && child.type && child.type.displayName === 'feinput') {
             let input = React.cloneElement(child, {
                 ref: `input${context.inputIndex++}`,
