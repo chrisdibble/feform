@@ -266,11 +266,11 @@ class Example7 extends Component {
     };
 
     handleExternalSubmit = () => {
-        this.refs.form.submit();
+        this.form.submit();
     };
 
     handleExternalReset = () => {
-        this.refs.form.reset();
+        this.form.reset();
     };
 
     render() {
@@ -280,7 +280,7 @@ class Example7 extends Component {
             <div>
                 <div style={{display: 'inline-block', width: 400, float: 'left'}}>
                     <h2>External Submit</h2>
-                    <Form ref="form" submit={(event) => {
+                    <Form ref={c => { this.form = c; }} submit={(event) => {
                         props.handleSubmit(event, 'Example 7')
                     }}>
                         <Field name="username" label="Username" validations={['required']}/>
@@ -302,7 +302,7 @@ class Example8 extends Component {
             <div>
                 <div style={{display: 'inline-block', width: 400, float: 'left'}}>
                     <h2>Multi Value Input</h2>
-                    <Form ref="form" submit={(event) => {
+                    <Form submit={(event) => {
                         props.handleSubmit(event, 'Example 8')
                     }}>
                         <MultiValueInput name="favoriteLetter" label="Favorite Letter"
