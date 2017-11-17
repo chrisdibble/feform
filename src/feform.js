@@ -1,16 +1,9 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import Validate from 'validate.js';
 import _ from 'lodash';
 
-const iterateInputRefs = function(refs, fn) {
-    _.forOwn(refs, (value, key) => {
-        if (key.startsWith('input')) {
-            fn.call(this, value);
-        }
-    });
-};
-
-const findInputs = function(children, valueChange, context={inputIndex: 0, childIndex: 0}, depth=0) {
+const findInputs = function(form, children, valueChange, context={inputIndex: 0, childIndex: 0}, depth=0) {
     let inputs = [];
     React.Children.forEach(children, (child) => {
         // have to assign a key to avoid warning about dynamic children
@@ -22,14 +15,14 @@ const findInputs = function(children, valueChange, context={inputIndex: 0, child
         }
         if (child && child.type && child.type.displayName === 'feinput') {
             let input = React.cloneElement(child, {
-                ref: `input${context.inputIndex++}`,
+                ref: c => { form.inputs[context.inputIndex++] = c; },
                 key: childKey,
                 valueChange
             });
             inputs.push(input);
         } else {
           if (child && child.props && child.props.children) {
-              let childInputs = findInputs(child.props.children, valueChange, context, depth+1);
+              let childInputs = findInputs(form, child.props.children, valueChange, context, depth+1);
               let input = React.cloneElement(child, {
                 key: childKey,
                 ...child.props
@@ -50,7 +43,9 @@ const runValidations = function(inputs, reportFailures = true) {
         pristineCount = 0,
         data = {};
 
-    iterateInputRefs.call(this, inputs, function(input) {
+    _.forEach(inputs, input => {
+        if (!input) return;
+
         let inputFailures = [];
             inputCount++;
 
@@ -112,10 +107,12 @@ export default class Form extends Component {
         validationFailures: []
     };
 
+    inputs = [];
+
     getInputByName = (name) => {
         let input;
 
-        _.forOwn(this.refs, (ref) => {
+        _.forOwn(this.inputs, (ref) => {
             if (ref.getName && ref.getName() === name) {
                 input = ref;
             }
@@ -131,14 +128,15 @@ export default class Form extends Component {
             changedData = {},
             me = this;
 
-        iterateInputRefs.call(me, me.refs, function(input) {
+        _.forEach(me.inputs, function(input) {
+            if (!input) return;
             data[input.getName()] = input.getValue();
             if (!input.isPristine()) {
                 changedData[input.getName()] = input.getValue();
             }
         });
 
-        const validate = runValidations(me.refs, true);
+        const validate = runValidations(me.inputs, true);
 
         me.props.submit(Object.assign({}, validate, {data, changedData}), true);
     };
@@ -148,7 +146,8 @@ export default class Form extends Component {
 
         event.preventDefault();
 
-        iterateInputRefs.call(me, me.refs, function(input) {
+        _.forEach(me.inputs, function(input) {
+            if (!input) return;
             input.resetValue();
         });
 
@@ -160,15 +159,15 @@ export default class Form extends Component {
     validate = (reportInputErrors = true) => {
         const me = this;
 
-        return runValidations(me.refs, reportInputErrors);
+        return runValidations(me.inputs, reportInputErrors);
     };
 
     submit = () => {
-        this.refs.form.dispatchEvent(new Event('submit'));
+        this.form.dispatchEvent(new Event('submit'));
     };
 
     reset = () => {
-        this.refs.form.dispatchEvent(new Event('reset'));
+        this.form.dispatchEvent(new Event('reset'));
     };
 
     render() {
@@ -179,9 +178,9 @@ export default class Form extends Component {
             /* eslint-disable */
 
         return (
-            <form ref="form" {...rest} onSubmit={me.handleSubmit} onReset={me.handleReset} noValidate>
-                {findInputs(children, () => {
-                    me.props.validityChange(runValidations(me.refs, me.props.reportFieldErrors));
+            <form ref={(c) => this.form = c} {...rest} onSubmit={me.handleSubmit} onReset={me.handleReset} noValidate>
+                {findInputs(this, children, () => {
+                    me.props.validityChange(runValidations(me.inputs, me.props.reportFieldErrors));
                 })}
             </form>
         );
