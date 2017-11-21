@@ -1,6 +1,6 @@
 {
   "name": "feform",
-  "version": "0.1.13",
+  "version": "0.1.14",
   "private": false,
   "description": "Simple Reactive Form Components",
   "main": "./lib/feform",
@@ -37,6 +37,8 @@
     "json-loader": "0.5.4",
     "opn": "4.0.2",
     "postcss-loader": "0.9.1",
+    "react": "^16.1.1",
+    "react-dom": "^16.1.1",
     "rimraf": "2.5.3",
     "style-loader": "0.13.1",
     "url-loader": "0.5.7",
@@ -58,9 +60,12 @@
   },
   "dependencies": {
     "lodash": "^4.13.1",
-    "react": "^15.2.1",
-    "react-dom": "^15.2.1",
+    "prop-types": "^15.6.0",
     "validate.js": "^0.10.0"
+  },
+  "peerDependencies": {
+    "react": "^15.6.0 || ^16.1.0",
+    "react-dom": "^15.6.0 || ^16.1.0"
   },
   "scripts": {
     "prepublish": "node_modules/babel-cli/bin/babel.js src/feform.js --out-file lib/feform.js",
