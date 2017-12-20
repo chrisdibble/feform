@@ -113,7 +113,7 @@ export default class Form extends Component {
         let input;
 
         _.forOwn(this.inputs, (ref) => {
-            if (ref.getName && ref.getName() === name) {
+            if (ref && ref.getName && ref.getName() === name) {
                 input = ref;
             }
         });
