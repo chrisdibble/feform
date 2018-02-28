@@ -163,11 +163,11 @@ export default class Form extends Component {
     };
 
     submit = () => {
-        this.form.dispatchEvent(new Event('submit'));
+        this.form.dispatchEvent(new Event('submit', {cancelable: true}));
     };
 
     reset = () => {
-        this.form.dispatchEvent(new Event('reset'));
+        this.form.dispatchEvent(new Event('reset', {cancelable: true}));
     };
 
     render() {
